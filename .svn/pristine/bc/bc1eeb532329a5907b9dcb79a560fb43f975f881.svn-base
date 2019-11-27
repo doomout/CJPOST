@@ -1,0 +1,588 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using DevExpress.Spreadsheet;
+using Devart.Data.Oracle;
+
+namespace GSC_CJPOST
+{
+    public partial class Main_Form : DevExpress.XtraBars.Ribbon.RibbonForm
+    {
+        /// <summary>
+        /// 문자 발송여부 (기본 : true)
+        /// </summary>
+        private bool SMS_SendChk = true;
+
+        /// <summary>
+        /// 법인영업 송장 등록여부 (기본 : true)
+        /// </summary>
+        private bool Sales_Chk = true;
+
+        /// <summary>
+        /// 리테일 송장 등록여부 (기본 : true)
+        /// </summary>
+        private bool Retail_Chk = true;
+
+        // 처리 상태
+        private bool ProcessState = false;
+
+        private ProgressForm loadingform;
+
+        private OracleCommand oracmd;
+        private OracleTransaction oratran;
+
+        private List<POSTDATA> listdata1;
+        private List<POSTDATA> listdata2;
+
+        public Main_Form()
+        {
+            InitializeComponent();
+            
+            // 로딩폼 객체 생성
+            this.loadingform = new ProgressForm(); // 로딩폼 Width, Height 값 가져오기위한 생성
+
+            // 오라클 연결 문자열
+            this.oracleConnection1.ConnectionString = "User Id=gscadmin;Password=gscsystem;Server = 218.145.66.140;unicode=True;Direct=True;Sid=GSC;";
+            //this.oracleConnection1.ConnectionString = "User Id=gscadmin;Password=gscsystem;Server = 61.74.60.212; unicode=True;Direct=True;Sid=GSC;"; //IP 할당
+
+            // 오라 커맨드 생성
+            this.oracmd = new OracleCommand();
+
+            // openFileDialog1 설정
+            this.openFileDialog1.Title = "열기";
+            this.openFileDialog1.Filter = "모든 Excel 파일 (*.xls,*.xlsx)|*.xls;*.xlsx|XLS 파일 (*.xls)|*.xls|XLSX 파일 (*.xlsx)|*.xlsx";
+            this.openFileDialog1.FilterIndex = 1;
+            //this.openFileDialog1.InitialDirectory = "c:\\";
+            this.openFileDialog1.RestoreDirectory = true;
+        }
+
+        private void Main_Form_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Main_Form_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.oracleConnection1.State == ConnectionState.Open)
+            {
+                // 오라클 닫기
+                this.oracleConnection1.Close();
+            }
+        }
+
+        #region 로딩 폼
+
+        public void ShowWaitForm(Form form)
+        {
+            if (form.IsMdiChild) // Floating 되지 않았을때.
+            {
+                this.splashScreenManager1.SplashFormStartPosition = DevExpress.XtraSplashScreen.SplashFormStartPosition.Default;
+            }
+            else   // Floating 됬을때 해당 폼의 Center로 SplashFormStartPosition 지정
+            {
+                this.splashScreenManager1.SplashFormStartPosition = DevExpress.XtraSplashScreen.SplashFormStartPosition.Manual;
+                this.splashScreenManager1.SplashFormLocation = new Point(form.Left + (form.Width / 2) - (this.loadingform.Width / 2),
+                    form.Top + (form.Height / 2) - (this.loadingform.Height / 2));
+            }
+
+            if (!this.splashScreenManager1.IsSplashFormVisible)
+                this.splashScreenManager1.ShowWaitForm();
+        }
+
+        public void CloseWaitForm()
+        {
+            if (this.splashScreenManager1.IsSplashFormVisible)
+            {
+                this.splashScreenManager1.CloseWaitForm();
+            }
+
+        }
+
+        #endregion
+
+        // 파일 열기
+        private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            // 파일 열기
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.ShowWaitForm(this);
+
+                this.spreadsheetControl1.LoadDocument(this.openFileDialog1.FileName);
+                this.labelControl1.Text = string.Format("문서명 : {0}", this.openFileDialog1.SafeFileName);
+            }
+        }
+
+        // 송장 등록
+        private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            // 오라클 연결
+            if (this.oracleConnection1.State == ConnectionState.Closed)
+            {
+                this.oracleConnection1.Open();
+            }
+
+            // 트렌젝션 선언
+            this.oratran = this.oracleConnection1.BeginTransaction(IsolationLevel.ReadCommitted);
+
+            // oracmd 설정
+            this.oracmd.Connection = this.oracleConnection1;
+            this.oracmd.CommandType = CommandType.Text;
+
+            if (this.backgroundWorker1.IsBusy != true)
+            {
+                // 백그라운드 동작
+                this.backgroundWorker1.RunWorkerAsync();
+                this.barStaticItem1.Caption = "등록 준비";
+            }
+        }
+
+        // 토글 이벤트 법인영업 송장등록 여부
+        private void barToggleSwitchItem1_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            this.Sales_Chk = (sender as DevExpress.XtraBars.BarToggleSwitchItem).Checked;
+        }
+
+        // 토글 이벤트 리테일 송장등록 여부
+        private void barToggleSwitchItem2_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            this.Retail_Chk = (sender as DevExpress.XtraBars.BarToggleSwitchItem).Checked;
+        }
+
+        // 토글 이벤트 문자발송 여부
+        private void barToggleSwitchItem3_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            this.SMS_SendChk = (sender as DevExpress.XtraBars.BarToggleSwitchItem).Checked;
+        }
+
+        // 백그라운드 실행
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            IWorkbook workbook1 = this.spreadsheetControl1.ActiveWorksheet.Workbook;
+            Worksheet worksheet = workbook1.Worksheets[0];
+
+            string tno, oid;
+            int x = 1;
+
+            // 크로스 스레드 오류 무시
+            //멀티 스레드에서도 다른 스레드의 컨트롤에 접근 가능
+            //CheckForIllegalCrossThreadCalls = false;
+
+            string iSQL;
+            OracleDataReader oradr;
+
+            try
+            {
+                this.listdata1 = new List<POSTDATA>();
+                this.listdata2 = new List<POSTDATA>();
+
+                // 자료 취합
+                for (int i = 1; i <= worksheet.Rows.LastUsedIndex; i++)
+                {
+                    // 운송장번호
+                    tno = worksheet[i, 5].Value.ToString();
+
+                    // 주문번호
+                    oid = string.Format("'{0}'",worksheet[i, 15].Value.ToString());
+
+                    //int temp = (from data in this.listdata1
+                    //            where data.OID == oid
+                    //            select data).Count();
+
+                    IEnumerable<POSTDATA> list = (from data in this.listdata1
+                                                  where data.OID == oid
+                                                  select data);
+
+                    List<POSTDATA> temp2 = list.ToList();
+
+                    if (temp2.Count == 0)
+                    {
+                        // 중복값이 없는 경우 추가
+                        this.listdata1.Add(new POSTDATA(tno, oid));
+                    }
+                    else
+                    {
+                        // 중복이 있는 경우 업데이트
+                        temp2[0].TNO = temp2[0].TNO + ',' + tno;
+                    }
+
+                    UserState state = new UserState(0, worksheet.Rows.LastUsedIndex, 0);
+                    this.backgroundWorker1.ReportProgress(i, state);
+                }
+
+                string str_arr = string.Join(",", this.listdata1.Select(j => j.OID).Where(r => r.ToString() != "''").ToList());
+                
+                /*
+                iSQL = "WITH datalist AS (                                                         ";
+                iSQL = iSQL + "SELECT 'G115KD062756' OID, '01088824574' HP, 1 OP, '' TNO FROM dual ";
+                iSQL = iSQL + "UNION ALL                                                           ";
+                iSQL = iSQL + "SELECT 'G115JH062559' OID, '01088824574' HP, 1 OP, '' TNO FROM dual ";
+                iSQL = iSQL + "UNION ALL                                                           ";
+                iSQL = iSQL + "SELECT 'G215MS062646' OID, '01088824574' HP, 1 OP, '' TNO FROM dual ";
+                iSQL = iSQL + "UNION ALL                                                           ";
+                iSQL = iSQL + "SELECT 'G215MS062646' OID, '01088824574' HP, 1 OP, '' TNO FROM dual ";
+                iSQL = iSQL + "UNION ALL                                                           ";
+                iSQL = iSQL + "SELECT 'G215YJ062810' OID, '01088824574' HP, 1 OP, '' TNO FROM dual ";
+                iSQL = iSQL + ")                                                                   ";
+                iSQL = iSQL + "SELECT OID, HP, OP, TNO FROM datalist                               ";
+                */
+
+                iSQL = "SELECT OID, OID2, TRIM(REPLACE(HP,' ','')) HP, OP, TNO                                                                 ";
+                iSQL = iSQL + "  FROM                                                                                                          ";
+                iSQL = iSQL + "       (                                                                                                        ";
+                iSQL = iSQL + "       SELECT CONTRACTNO || WHGCODE OID,                                                                        ";
+                iSQL = iSQL + "       CONTRACTNO OID2,                                                                                         ";
+                iSQL = iSQL + "              REPLACE ( CELLPHONE, '-', '' ) HP,                                                                ";
+                iSQL = iSQL + "              1 OP,                                                                                             ";
+                iSQL = iSQL + "              DELIVERY_NUMBER TNO                                                                               ";
+                iSQL = iSQL + "         FROM GSCADMIN.RELEASE_READY                                                                            ";
+                iSQL = iSQL + "        WHERE REG_DATE BETWEEN ADD_MONTHS ( TO_DATE ( TO_CHAR ( SYSDATE, 'yyyy-mm-dd' ), 'yyyy-mm-dd' ), - 1 )  ";
+                iSQL = iSQL + "        AND TO_DATE ( TO_CHAR ( SYSDATE, 'yyyy-mm-dd' ), 'yyyy-mm-dd' ) + 0.99999                               ";
+                iSQL = iSQL + "           UNION ALL                                                                                            ";
+                iSQL = iSQL + "       SELECT OID, OID OID2,                                                                                    ";
+                iSQL = iSQL + "              REPLACE ( B.HPHONE, '-', '' ) HP,                                                                 ";
+                iSQL = iSQL + "              2 OP,                                                                                             ";
+                iSQL = iSQL + "              TRACKING_NO TNO                                                                                   ";
+                iSQL = iSQL + "         FROM GSCSHOP.ORDER_INFO A, GSCSHOP.CUSTM B                                                             ";
+                iSQL = iSQL + "        WHERE A.ID = B.ID(+)                                                                                    ";
+                iSQL = iSQL + "        AND A.REG_DATE BETWEEN ADD_MONTHS ( TO_DATE ( TO_CHAR ( SYSDATE, 'yyyy-mm-dd' ), 'yyyy-mm-dd' ), - 1 )  ";
+                iSQL = iSQL + "        AND TO_DATE ( TO_CHAR ( SYSDATE, 'yyyy-mm-dd' ), 'yyyy-mm-dd' ) + 0.99999                               ";
+                iSQL = iSQL + "        AND LENGTH ( REPLACE ( B.HPHONE, '-', '' ) ) >= 10                                                      ";
+                iSQL = iSQL + "       )                                                                                                        ";
+                iSQL = iSQL + "  WHERE OID IN (" + str_arr + ")                                                                                ";
+                
+                this.oracmd.CommandText = iSQL;
+
+                int RecodeCount = this.oracmd.GetRecordCount();
+
+                if (RecodeCount != 0)
+                {
+                    oradr = this.oracmd.ExecuteReader();
+                    
+                    while(oradr.Read())
+                    {
+                        this.listdata2.Add(new POSTDATA(
+                            oradr["OID"].ToString(),
+                            oradr["OID2"].ToString(),
+                            oradr["HP"].ToString().Replace(" ", "").Trim(),
+                            Convert.ToInt32(oradr["OP"])
+                            ));
+                    }
+
+                    oradr.Close();
+
+                    x = 1;
+                    // 데이터 수집
+                    foreach(POSTDATA data in this.listdata1)
+                    {
+                        IEnumerable<POSTDATA> list = (from p in this.listdata2
+                                                      where p.OID == data.OID.Replace("'","")
+                                                      select p);
+
+                        List<POSTDATA> temp = list.ToList();
+
+                        if (temp.Count != 0)
+                        {
+                            data.HNO = temp[0].HNO.Replace("-", "");
+                            data.TYPE = Convert.ToInt32(temp[0].TYPE);
+                            data.OID2 = temp[0].OID2;
+                        }
+
+                        UserState state = new UserState(1, this.listdata1.Count, 0);
+                        this.backgroundWorker1.ReportProgress(x, state);
+                        x++;
+                    }
+
+                    x = 1;
+                    // 데이터 등록
+                    foreach (POSTDATA data in this.listdata1)
+                    {
+                        if(data.TYPE == 1)
+                        {
+                            // 법인 등록 여부
+                            if (this.Sales_Chk == true)
+                            {
+                                iSQL = "UPDATE GSCADMIN.RELEASE_READY                   ";
+                                iSQL = iSQL + "SET DELIVERY_NUMBER = '" + data.TNO + "' ";
+                                iSQL = iSQL + "WHERE CONTRACTNO || WHGCODE = '" + data.OID.Replace("'", "") + "'    ";
+
+                                this.oracmd.CommandText = iSQL;
+                                this.oracmd.ExecuteNonQuery();
+
+                                // 문자 발송여부
+                                if (this.SMS_SendChk == true)
+                                {
+                                    if (data.HNO != "")
+                                    {
+                                        string[] smsstr = data.TNO.Split(',');
+
+                                        iSQL = "INSERT INTO GSCADMIN.MSG_DATA                                                                                           ";
+                                        iSQL = iSQL + "       (                                                                                                         ";
+                                        iSQL = iSQL + "           MSG_SEQ,                                                                                              ";
+                                        iSQL = iSQL + "           CUR_STATE,                                                                                            ";
+                                        iSQL = iSQL + "           CALL_TO,                                                                                              ";
+                                        iSQL = iSQL + "           CALL_FROM,                                                                                            ";
+                                        iSQL = iSQL + "           SMS_TXT,                                                                                              ";
+                                        iSQL = iSQL + "           MSG_TYPE                                                                                              ";
+                                        iSQL = iSQL + "       )                                                                                                         ";
+                                        iSQL = iSQL + "       VALUES                                                                                                    ";
+                                        iSQL = iSQL + "       (                                                                                                         ";
+                                        iSQL = iSQL + "           GSCADMIN.MSG_DATA_SEQ.NEXTVAL,                                                                        ";
+                                        iSQL = iSQL + "           0,                                                                                                    ";
+                                        iSQL = iSQL + "           TRIM ( REPLACE ( '" + data.HNO + "', '-', '' ) ),                                                     ";
+                                        iSQL = iSQL + "           '02-325-3031',                                                                                        ";
+                                        iSQL = iSQL + "           '[GSC] 주문번호 ' || '" + data.OID2.Replace("'", "") + "' || ' 상품 CJ 대한통운 택배 '|| SUBSTR ( '" + smsstr[0] + "', 0, 14 ) ||'으로 발송되었습니다.', ";
+                                        iSQL = iSQL + "           4                                                                                                     ";
+                                        iSQL = iSQL + "       )                                                                                                         ";
+
+                                        this.oracmd.CommandText = iSQL;
+                                        this.oracmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
+                        else if(data.TYPE == 2)
+                        {
+                            // 리테일 등록 여부
+                            if (this.Retail_Chk == true)
+                            {
+                                iSQL = "UPDATE GSCSHOP.ORDER_INFO                   ";
+                                iSQL = iSQL + "SET TRACKING_NO = '" + data.TNO + "' ";
+                                iSQL = iSQL + "WHERE OID = '" + data.OID.Replace("'", "") + "'       ";
+
+                                this.oracmd.CommandText = iSQL;
+                                this.oracmd.ExecuteNonQuery();
+
+                                // 문자 발송여부
+                                if (this.SMS_SendChk == true)
+                                {
+                                    if (data.HNO != "")
+                                    {
+                                        string[] smsstr = data.TNO.Split(',');
+
+                                        iSQL = "INSERT INTO GSCADMIN.MSG_DATA                                                                                           ";
+                                        iSQL = iSQL + "       (                                                                                                         ";
+                                        iSQL = iSQL + "           MSG_SEQ,                                                                                              ";
+                                        iSQL = iSQL + "           CUR_STATE,                                                                                            ";
+                                        iSQL = iSQL + "           CALL_TO,                                                                                              ";
+                                        iSQL = iSQL + "           CALL_FROM,                                                                                            ";
+                                        iSQL = iSQL + "           SMS_TXT,                                                                                              ";
+                                        iSQL = iSQL + "           MSG_TYPE                                                                                              ";
+                                        iSQL = iSQL + "       )                                                                                                         ";
+                                        iSQL = iSQL + "       VALUES                                                                                                    ";
+                                        iSQL = iSQL + "       (                                                                                                         ";
+                                        iSQL = iSQL + "           GSCADMIN.MSG_DATA_SEQ.NEXTVAL,                                                                        ";
+                                        iSQL = iSQL + "           0,                                                                                                    ";
+                                        iSQL = iSQL + "           TRIM ( REPLACE ( '" + data.HNO + "', '-', '' ) ),                                                     ";
+                                        iSQL = iSQL + "           '02-325-3031',                                                                                        ";
+                                        iSQL = iSQL + "           '[GSC] 주문번호 ' || '" + data.OID2.Replace("'", "") + "' || ' 상품 CJ 대한통운 택배 '|| SUBSTR ( '" + smsstr[0] + "', 0, 14 ) ||'으로 발송되었습니다.', ";
+                                        iSQL = iSQL + "           4                                                                                                     ";
+                                        iSQL = iSQL + "       )                                                                                                         ";
+
+                                        this.oracmd.CommandText = iSQL;
+                                        this.oracmd.ExecuteNonQuery();
+
+                                    }
+                                }
+                            }
+                        }
+
+                        UserState state = new UserState(2, this.listdata1.Count, 0);
+                        this.backgroundWorker1.ReportProgress(x, state);
+                        x++;
+                    }
+
+                    this.oratran.Commit();
+                    this.ProcessState = true;
+                }
+                else
+                {
+
+                }
+            }
+            catch(Exception e2)
+            {
+                this.ProcessState = false;
+                this.oratran.Rollback();
+                MessageBox.Show("처리도중 오류가 발생 되었습니다.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.oratran.Dispose();
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            UserState state = (e.UserState as UserState);
+
+            switch (state.MODE)
+            {
+                case 0:
+                    this.barStaticItem1.Caption = "자료 취합중";
+                    break;
+
+                case 1: // 데이터 수집
+                    this.barStaticItem1.Caption = "자료 수집중";
+                    break;
+
+                case 2: // 데이터 등록
+                    this.barStaticItem1.Caption = "자료 등록중";
+                    break;
+            }
+
+            // 하단 StatusBar Progress 속성
+            this.repositoryItemProgressBar1.Maximum = state.MAX;
+            this.repositoryItemProgressBar1.Minimum = state.MIN;
+
+            // 하단 StatusBar Progress
+            this.barEditItem1.EditValue = (int)e.ProgressPercentage;
+            this.barEditItem1.Refresh();
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (this.ProcessState == true)
+            {
+                MessageBox.Show("등록이 완료 되었습니다.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+
+            this.barStaticItem1.Caption = "준비";
+            this.barEditItem1.EditValue = 0;
+            this.barEditItem1.Refresh();
+
+            if (this.oracleConnection1.State == ConnectionState.Open)
+            {
+                // 오라클 닫기
+                this.oracleConnection1.Close();
+            }
+        }
+
+        private void spreadsheetControl1_DocumentLoaded(object sender, EventArgs e)
+        {
+            this.CloseWaitForm();
+        }
+    }
+
+
+    /// <summary>
+    /// 프로그레스바 상태값
+    /// </summary>
+    public class UserState
+    {
+        private int mode;
+        private int max;
+        private int min;
+
+        /// <summary>
+        /// 모드 0 : wait
+        /// 모드 1 : down
+        /// 모드 2 : ok
+        /// 모드 3 : fail
+        /// </summary>
+        public int MODE
+        {
+            get { return this.mode; }
+            set { this.mode = value; }
+        }
+
+        public int MAX
+        {
+            get { return this.max; }
+            set { this.max = value; }
+        }
+
+        public int MIN
+        {
+            get { return this.min; }
+            set { this.min = value; }
+        }
+
+        public UserState()
+        {
+
+        }
+
+        /// <summary>
+        /// 기본 생성자
+        /// </summary>
+        /// <param name="mode">모드 0, 1, 2, 3</param>
+        public UserState(int mode, int max, int min)
+        {
+            this.mode = mode;
+            this.max = max;
+            this.min = min;
+        }
+    }
+
+    public class POSTDATA
+    {
+        private string tno;
+        private string oid;
+        private int type;
+        private string hno;
+        private string oid2;
+
+        public string TNO
+        {
+            get { return this.tno;  }
+            set { this.tno = value; }
+        }
+
+        public string OID
+        {
+            get { return this.oid; }
+            set { this.oid = value; }
+        }
+
+        public string OID2
+        {
+            get { return this.oid2; }
+            set { this.oid2 = value; }
+        }
+
+        public int TYPE
+        {
+            get { return this.type; }
+            set { this.type = value; }
+        }
+
+        public string HNO
+        {
+            get { return this.hno; }
+            set { this.hno = value; }
+        }
+
+        public POSTDATA(string tno, string oid)
+        {
+            this.tno = tno;
+            this.oid = oid;
+            this.type = 0;
+            this.hno = "";
+        }
+
+        public POSTDATA(string oid, string oid2,string hno, int type)
+        {
+            this.oid = oid;
+            this.oid2 = oid2;
+            this.hno = hno;
+            this.type = type;
+            this.tno = "";
+        }
+
+        public POSTDATA(string tno, string oid, int type, string hno)
+        {
+            this.tno = tno;
+            this.oid = oid;
+            this.type = type;
+            this.hno = hno;
+        }
+    }
+}

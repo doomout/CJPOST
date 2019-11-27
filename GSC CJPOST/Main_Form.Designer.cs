@@ -1,0 +1,467 @@
+﻿namespace GSC_CJPOST
+{
+    partial class Main_Form
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_Form));
+            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+            this.splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::GSC_CJPOST.ProgressForm), true, true);
+            this.spreadsheetControl1 = new DevExpress.XtraSpreadsheet.SpreadsheetControl();
+            this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.spreadsheetCommandBarButtonItem1 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem();
+            this.barToggleSwitchItem1 = new DevExpress.XtraBars.BarToggleSwitchItem();
+            this.barToggleSwitchItem2 = new DevExpress.XtraBars.BarToggleSwitchItem();
+            this.barToggleSwitchItem3 = new DevExpress.XtraBars.BarToggleSwitchItem();
+            this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
+            this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
+            this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemProgressBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            this.fileRibbonPage1 = new DevExpress.XtraSpreadsheet.UI.FileRibbonPage();
+            this.commonRibbonPageGroup1 = new DevExpress.XtraSpreadsheet.UI.CommonRibbonPageGroup();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            this.spreadsheetBarController1 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetBarController();
+            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.oracleConnection1 = new Devart.Data.Oracle.OracleConnection();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spreadsheetBarController1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
+            this.panelControl1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // spreadsheetControl1
+            // 
+            this.spreadsheetControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spreadsheetControl1.Location = new System.Drawing.Point(0, 0);
+            this.spreadsheetControl1.MenuManager = this.ribbonControl1;
+            this.spreadsheetControl1.Name = "spreadsheetControl1";
+            this.spreadsheetControl1.Options.Save.CurrentFormat = DevExpress.Spreadsheet.DocumentFormat.Xlsx;
+            this.spreadsheetControl1.Options.View.ColumnHeaderHeight = 25;
+            this.spreadsheetControl1.Options.View.RowHeaderWidth = 40;
+            this.spreadsheetControl1.Size = new System.Drawing.Size(1195, 599);
+            this.spreadsheetControl1.TabIndex = 0;
+            this.spreadsheetControl1.DocumentLoaded += new System.EventHandler(this.spreadsheetControl1_DocumentLoaded);
+            // 
+            // ribbonControl1
+            // 
+            this.ribbonControl1.ExpandCollapseItem.Id = 0;
+            this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.spreadsheetCommandBarButtonItem1,
+            this.barToggleSwitchItem1,
+            this.barToggleSwitchItem2,
+            this.barToggleSwitchItem3,
+            this.barStaticItem1,
+            this.barStaticItem2,
+            this.barEditItem1,
+            this.barButtonItem1,
+            this.barButtonItem2});
+            this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            this.ribbonControl1.MaxItemId = 6;
+            this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.fileRibbonPage1});
+            this.ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemProgressBar1});
+            this.ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2013;
+            this.ribbonControl1.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowFullScreenButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.ShowOnMultiplePages;
+            this.ribbonControl1.ShowToolbarCustomizeItem = false;
+            this.ribbonControl1.Size = new System.Drawing.Size(1195, 125);
+            this.ribbonControl1.StatusBar = this.ribbonStatusBar;
+            this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
+            this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+            // 
+            // spreadsheetCommandBarButtonItem1
+            // 
+            this.spreadsheetCommandBarButtonItem1.Caption = "새 파일";
+            this.spreadsheetCommandBarButtonItem1.CommandName = "FileNew";
+            this.spreadsheetCommandBarButtonItem1.Id = 1;
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Disabled.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Hovered.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Normal.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemAppearance.Pressed.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.spreadsheetCommandBarButtonItem1.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.spreadsheetCommandBarButtonItem1.Name = "spreadsheetCommandBarButtonItem1";
+            // 
+            // barToggleSwitchItem1
+            // 
+            this.barToggleSwitchItem1.Caption = "법인영업 송장등록";
+            this.barToggleSwitchItem1.Checked = true;
+            this.barToggleSwitchItem1.Id = 2;
+            this.barToggleSwitchItem1.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemAppearance.Disabled.Options.UseFont = true;
+            this.barToggleSwitchItem1.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemAppearance.Hovered.Options.UseFont = true;
+            this.barToggleSwitchItem1.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemAppearance.Normal.Options.UseFont = true;
+            this.barToggleSwitchItem1.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemAppearance.Pressed.Options.UseFont = true;
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem1.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.barToggleSwitchItem1.Name = "barToggleSwitchItem1";
+            this.barToggleSwitchItem1.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barToggleSwitchItem1_CheckedChanged);
+            // 
+            // barToggleSwitchItem2
+            // 
+            this.barToggleSwitchItem2.Caption = "리테일 송장등록   ";
+            this.barToggleSwitchItem2.Checked = true;
+            this.barToggleSwitchItem2.Id = 2;
+            this.barToggleSwitchItem2.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemAppearance.Disabled.Options.UseFont = true;
+            this.barToggleSwitchItem2.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemAppearance.Hovered.Options.UseFont = true;
+            this.barToggleSwitchItem2.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemAppearance.Normal.Options.UseFont = true;
+            this.barToggleSwitchItem2.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemAppearance.Pressed.Options.UseFont = true;
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem2.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.barToggleSwitchItem2.Name = "barToggleSwitchItem2";
+            this.barToggleSwitchItem2.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barToggleSwitchItem2_CheckedChanged);
+            // 
+            // barToggleSwitchItem3
+            // 
+            this.barToggleSwitchItem3.Caption = "문자 발송 여부";
+            this.barToggleSwitchItem3.Checked = true;
+            this.barToggleSwitchItem3.Id = 2;
+            this.barToggleSwitchItem3.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemAppearance.Disabled.Options.UseFont = true;
+            this.barToggleSwitchItem3.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemAppearance.Hovered.Options.UseFont = true;
+            this.barToggleSwitchItem3.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemAppearance.Normal.Options.UseFont = true;
+            this.barToggleSwitchItem3.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemAppearance.Pressed.Options.UseFont = true;
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barToggleSwitchItem3.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.barToggleSwitchItem3.Name = "barToggleSwitchItem3";
+            this.barToggleSwitchItem3.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barToggleSwitchItem3_CheckedChanged);
+            // 
+            // barStaticItem1
+            // 
+            this.barStaticItem1.Caption = "준비";
+            this.barStaticItem1.Id = 1;
+            this.barStaticItem1.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemAppearance.Disabled.Options.UseFont = true;
+            this.barStaticItem1.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemAppearance.Hovered.Options.UseFont = true;
+            this.barStaticItem1.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemAppearance.Normal.Options.UseFont = true;
+            this.barStaticItem1.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemAppearance.Pressed.Options.UseFont = true;
+            this.barStaticItem1.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.barStaticItem1.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.barStaticItem1.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.barStaticItem1.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem1.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.barStaticItem1.Name = "barStaticItem1";
+            this.barStaticItem1.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.barStaticItem1.Width = 100;
+            // 
+            // barStaticItem2
+            // 
+            this.barStaticItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.barStaticItem2.AutoSize = DevExpress.XtraBars.BarStaticItemSize.Spring;
+            this.barStaticItem2.Caption = "Copyright © 2015 GSC International. Co., Ltd";
+            this.barStaticItem2.Id = 2;
+            this.barStaticItem2.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemAppearance.Disabled.Options.UseFont = true;
+            this.barStaticItem2.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemAppearance.Hovered.Options.UseFont = true;
+            this.barStaticItem2.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemAppearance.Normal.Options.UseFont = true;
+            this.barStaticItem2.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemAppearance.Pressed.Options.UseFont = true;
+            this.barStaticItem2.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.barStaticItem2.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.barStaticItem2.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.barStaticItem2.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9.75F);
+            this.barStaticItem2.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.barStaticItem2.Name = "barStaticItem2";
+            this.barStaticItem2.TextAlignment = System.Drawing.StringAlignment.Center;
+            // 
+            // barEditItem1
+            // 
+            this.barEditItem1.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.barEditItem1.Edit = this.repositoryItemProgressBar1;
+            this.barEditItem1.EditValue = "0";
+            this.barEditItem1.Id = 3;
+            this.barEditItem1.Name = "barEditItem1";
+            this.barEditItem1.Width = 200;
+            // 
+            // repositoryItemProgressBar1
+            // 
+            this.repositoryItemProgressBar1.Name = "repositoryItemProgressBar1";
+            this.repositoryItemProgressBar1.ShowTitle = true;
+            this.repositoryItemProgressBar1.Step = 1;
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "송장 열기";
+            this.barButtonItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.Glyph")));
+            this.barButtonItem1.Id = 4;
+            this.barButtonItem1.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemAppearance.Disabled.Options.UseFont = true;
+            this.barButtonItem1.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemAppearance.Hovered.Options.UseFont = true;
+            this.barButtonItem1.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemAppearance.Normal.Options.UseFont = true;
+            this.barButtonItem1.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemAppearance.Pressed.Options.UseFont = true;
+            this.barButtonItem1.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.barButtonItem1.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.barButtonItem1.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.barButtonItem1.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem1.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.barButtonItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.LargeGlyph")));
+            this.barButtonItem1.Name = "barButtonItem1";
+            toolTipTitleItem1.Text = "열기 (Ctrl+O)/Open a document.";
+            superToolTip1.Items.Add(toolTipTitleItem1);
+            this.barButtonItem1.SuperTip = superToolTip1;
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "송장등록";
+            this.barButtonItem2.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.Glyph")));
+            this.barButtonItem2.Id = 5;
+            this.barButtonItem2.ItemAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemAppearance.Disabled.Options.UseFont = true;
+            this.barButtonItem2.ItemAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemAppearance.Hovered.Options.UseFont = true;
+            this.barButtonItem2.ItemAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemAppearance.Normal.Options.UseFont = true;
+            this.barButtonItem2.ItemAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemAppearance.Pressed.Options.UseFont = true;
+            this.barButtonItem2.ItemInMenuAppearance.Disabled.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemInMenuAppearance.Disabled.Options.UseFont = true;
+            this.barButtonItem2.ItemInMenuAppearance.Hovered.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemInMenuAppearance.Hovered.Options.UseFont = true;
+            this.barButtonItem2.ItemInMenuAppearance.Normal.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemInMenuAppearance.Normal.Options.UseFont = true;
+            this.barButtonItem2.ItemInMenuAppearance.Pressed.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.barButtonItem2.ItemInMenuAppearance.Pressed.Options.UseFont = true;
+            this.barButtonItem2.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.LargeGlyph")));
+            this.barButtonItem2.Name = "barButtonItem2";
+            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            // 
+            // fileRibbonPage1
+            // 
+            this.fileRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.commonRibbonPageGroup1,
+            this.ribbonPageGroup1,
+            this.ribbonPageGroup2});
+            this.fileRibbonPage1.Name = "fileRibbonPage1";
+            // 
+            // commonRibbonPageGroup1
+            // 
+            this.commonRibbonPageGroup1.ItemLinks.Add(this.spreadsheetCommandBarButtonItem1);
+            this.commonRibbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
+            this.commonRibbonPageGroup1.ItemLinks.Add(this.barButtonItem2);
+            this.commonRibbonPageGroup1.Name = "commonRibbonPageGroup1";
+            // 
+            // ribbonPageGroup1
+            // 
+            this.ribbonPageGroup1.ItemLinks.Add(this.barToggleSwitchItem1);
+            this.ribbonPageGroup1.ItemLinks.Add(this.barToggleSwitchItem2);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.ShowCaptionButton = false;
+            this.ribbonPageGroup1.Text = "Register Option";
+            // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.ItemLinks.Add(this.barToggleSwitchItem3);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.ShowCaptionButton = false;
+            this.ribbonPageGroup2.Text = "SMS Option";
+            // 
+            // ribbonStatusBar
+            // 
+            this.ribbonStatusBar.ItemLinks.Add(this.barStaticItem1);
+            this.ribbonStatusBar.ItemLinks.Add(this.barStaticItem2);
+            this.ribbonStatusBar.ItemLinks.Add(this.barEditItem1);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 724);
+            this.ribbonStatusBar.Name = "ribbonStatusBar";
+            this.ribbonStatusBar.Ribbon = this.ribbonControl1;
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1195, 31);
+            // 
+            // spreadsheetBarController1
+            // 
+            this.spreadsheetBarController1.BarItems.Add(this.spreadsheetCommandBarButtonItem1);
+            this.spreadsheetBarController1.Control = this.spreadsheetControl1;
+            // 
+            // panelControl1
+            // 
+            this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.spreadsheetControl1);
+            this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelControl1.Location = new System.Drawing.Point(0, 125);
+            this.panelControl1.Name = "panelControl1";
+            this.panelControl1.Size = new System.Drawing.Size(1195, 599);
+            this.panelControl1.TabIndex = 3;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // oracleConnection1
+            // 
+            this.oracleConnection1.Name = "oracleConnection1";
+            this.oracleConnection1.Owner = this;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.InitialDirectory = "C:\\\\";
+            this.openFileDialog1.RestoreDirectory = true;
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl1.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.labelControl1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.labelControl1.Location = new System.Drawing.Point(539, 94);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(389, 16);
+            this.labelControl1.TabIndex = 6;
+            this.labelControl1.Text = "문서명 : ";
+            // 
+            // Main_Form
+            // 
+            this.ActiveGlowColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(84)))), ((int)(((byte)(165)))));
+            this.Appearance.Options.UseFont = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1195, 755);
+            this.Controls.Add(this.labelControl1);
+            this.Controls.Add(this.panelControl1);
+            this.Controls.Add(this.ribbonStatusBar);
+            this.Controls.Add(this.ribbonControl1);
+            this.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Glow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.InactiveGlowColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(169)))), ((int)(((byte)(218)))));
+            this.KeyPreview = true;
+            this.Name = "Main_Form";
+            this.Ribbon = this.ribbonControl1;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StatusBar = this.ribbonStatusBar;
+            this.Text = "송장 등록(CJ 대한통운)";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_Form_FormClosed);
+            this.Load += new System.EventHandler(this.Main_Form_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spreadsheetBarController1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
+            this.panelControl1.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraSpreadsheet.SpreadsheetControl spreadsheetControl1;
+        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+        private DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem spreadsheetCommandBarButtonItem1;
+        private DevExpress.XtraSpreadsheet.UI.FileRibbonPage fileRibbonPage1;
+        private DevExpress.XtraSpreadsheet.UI.CommonRibbonPageGroup commonRibbonPageGroup1;
+        private DevExpress.XtraSpreadsheet.UI.SpreadsheetBarController spreadsheetBarController1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraBars.BarToggleSwitchItem barToggleSwitchItem1;
+        private DevExpress.XtraBars.BarToggleSwitchItem barToggleSwitchItem2;
+        private DevExpress.XtraBars.BarToggleSwitchItem barToggleSwitchItem3;
+        private DevExpress.XtraEditors.PanelControl panelControl1;
+        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem1;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem2;
+        private DevExpress.XtraBars.BarEditItem barEditItem1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemProgressBar repositoryItemProgressBar1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private Devart.Data.Oracle.OracleConnection oracleConnection1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
+    }
+}
